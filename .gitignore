@@ -1,0 +1,4 @@
+secrets/
+.vagrant/
+Vagrantfile
+infrastructure/.terraform*
