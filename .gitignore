@@ -2,3 +2,4 @@ secrets/
 .vagrant/
 Vagrantfile
 infrastructure/.terraform*
+application/
