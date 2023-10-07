@@ -8,12 +8,12 @@ provider "yandex" {
 locals {
   is_prod   = terraform.workspace == "prod"
   cidr_blocks_a_map = {
-    prod    = ["192.168.10.0/24"]
-    stage   = ["192.168.60.0/24"]
+    prod    = ["10.0.0.0/24"]
+    stage   = ["10.10.0.0/24"]
   }
   cidr_blocks_b_map = {
-    prod    = ["192.168.20.0/24"]
-    stage   = ["192.168.70.0/24"]
+    prod    = ["10.0.1.0/24"]
+    stage   = ["10.10.1.0/24"]
   }
 }
 
