@@ -7,6 +7,7 @@ TF_IN_AUTOMATION=1 terraform apply -auto-approve
 
 echo "Gathering infrastructure results..."
 SUPPLEMENTARY_ADDRESSES=$(terraform output -json instance_group_masters_public_ips | tr -d '"[]')
+INTERNAL_ADDRESSES=$(terraform output -json instance_group_masters_private_ips | tr -d '"[]')
 GENERATE_CMD=$(. get-infrastructure.sh)
 
 echo "Generating hosts.yaml..."
@@ -22,6 +23,12 @@ sed -i -e "s/MASTER_PUBLIC_IPS_TO_REPLACE/${SUPPLEMENTARY_ADDRESSES}/g" ../kubes
 
 echo "Running ansible..."
 cd ../kubespray
+ANSIBLE_CONFIG=ansible.cfg ansible-playbook -i inventory/mycluster/hosts.yaml ../automation/wait-cluster-reachable.yml -b -v
 ANSIBLE_CONFIG=ansible.cfg ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml -b -v
 
+echo "Updating kube-config..."
+sed -i -- "s/${INTERNAL_ADDRESSES%,*}/${SUPPLEMENTARY_ADDRESSES%,*}/g" inventory/mycluster/artifacts/admin.conf
+cp -rf inventory/mycluster/artifacts/admin.conf $HOME/.kube/config
+
 cd ..
+kubectl get pods --all-namespaces
