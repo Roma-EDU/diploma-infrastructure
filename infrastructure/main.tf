@@ -61,9 +61,9 @@ resource "yandex_compute_instance_group" "k8s-masters" {
     }
 
     # Прерываемая
-    scheduling_policy {
-      preemptible = !local.is_prod
-    }
+    # scheduling_policy {
+    #   preemptible = !local.is_prod
+    # }
   }
 
   scale_policy {
@@ -131,9 +131,9 @@ resource "yandex_compute_instance_group" "k8s-workers" {
     }
 
     # Прерываемая
-    scheduling_policy {
-      preemptible = !local.is_prod
-    }
+    # scheduling_policy {
+    #   preemptible = !local.is_prod
+    # }
   }
 
   scale_policy {
