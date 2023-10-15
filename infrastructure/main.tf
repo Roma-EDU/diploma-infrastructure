@@ -154,3 +154,5 @@ resource "yandex_compute_instance_group" "k8s-workers" {
     max_unavailable = 2
   }
 }
+
+resource "null_resource" "atlantis-check" {}
