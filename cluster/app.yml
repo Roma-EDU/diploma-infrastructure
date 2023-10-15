@@ -18,6 +18,7 @@ spec:
       containers:
       - name: diploma-app
         image: roma4edu/diploma_app:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
